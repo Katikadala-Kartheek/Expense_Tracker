@@ -1,0 +1,43 @@
+﻿@{
+	ViewData["Title"] = "Home";
+}<div class="text-center">
+	<h1 class="display-4">Welcome to Daily Expense Tracker</h1>
+	<p class="lead">Easily track, categorize, and analyze your expenses with our simple yet powerful tool.</p>
+	<div class="row mt-4">
+		<div class="col-md-4">
+			<div class="card shadow-sm">
+				<div class="card-body text-center">
+					<h5 class="card-title">Track Expenses</h5>
+
+					<p class="card-text">Add, edit, and delete your daily expenses with ease.</p>
+					<a href="@Url.Action("Create", "Expense")" class="btn btn-primary">Add Expense</a>
+				</div>
+			</div>
+
+		</div>
+		<div class="col-md-4">
+			<div class="card shadow-sm">
+				<div class="card-body text-center">
+					<h5 class="card-title">Categorize & Analyze</h5>
+					<p class="card-text">View expenses categorized by Food, Travel, Shopping, etc.</p>
+					<a href="@Url.Action("Index", "Category")" class="btn btn-secondary">Category</a>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div class="card shadow-sm">
+				<div class="card-body text-center">
+					<h5 class="card-title">Generate Reports</h5>
+					<p class="card-text">Analyze your monthly and daily expense summaries with graphs.</p>  
+					<a href="@Url.Action("Index", "Graph")" class="btn btn-warning">View Report</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="mt-5">
+		<a href="@Url.Action("Login", "Account")" class="btn btn-outline-dark">Login</a>
+		<a href="@Url.Action("Register", "Account")" class="btn btn-outline-primary">Sign Up</a>
+	</div>
+
+</div>

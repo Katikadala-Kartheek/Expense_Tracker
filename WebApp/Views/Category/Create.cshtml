@@ -1,0 +1,27 @@
+﻿@model WebApp.Models.Category
+
+<div class="container mt-3">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-lg">
+                <div class="card-header bg-primary text-white text-center">
+                    <h3 class="mb-0">Add New Category</h3>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        <div class="form-group mt-3">
+                            <label for="Name"><i class="fas"></i>Category Name</label>
+                            <input type="text" step="0.01" class="form-control" id="CategoryName" name="CategoryName" value="@Model.CategoryName" required placeholder="Enter Name">
+                        </div>
+                        <button type="submit" class="btn btn-success w-100 mt-4">
+                            <i class="fas fa-plus-circle"></i> Add Category
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add FontAwesome for Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">

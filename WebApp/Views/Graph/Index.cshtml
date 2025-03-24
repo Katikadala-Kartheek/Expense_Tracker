@@ -1,0 +1,101 @@
+﻿
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+
+	.filter-box {
+		background: #e3f2fd;
+		padding: 15px;
+		border-radius: 8px;
+		margin-bottom: 20px;
+	}
+
+	button {
+		background-color: #007bff;
+		color: white;
+		border: none;
+		padding: 10px 20px;
+		border-radius: 5px;
+		transition: 0.3s;
+	}
+
+		button:hover {
+			background-color: #0056b3;
+		}
+
+	canvas {
+		max-width: 90%;
+		height: 60%;
+	}
+</style>
+
+<body>
+	<div class="container">
+		<div class="filter-box">
+			<div class="row">
+				<div class="col-md-4">
+					<label for="startDate" class="form-label">Start Date:</label>
+					<input type="date" id="startDate" class="form-control">
+				</div>
+				<div class="col-md-4">
+					<label for="endDate" class="form-label">End Date:</label>
+					<input type="date" id="endDate" class="form-control">
+				</div>
+				<div class="col-md-4 d-flex align-items-end">
+					<button type="button" class="btn w-100 btn-info" onclick="loadChart()">Filter</button>
+				</div>
+			</div>
+		</div>
+		<canvas id="expenseChart"></canvas>
+	</div>
+	<script>
+		function loadChart() {
+			var startDate = document.getElementById("startDate").value;
+			var endDate = document.getElementById("endDate").value;
+			console.log(`Fetching data for range: ${startDate} - ${endDate}`);
+			fetch(`/Graph/GetExpense?startDate=${startDate}&endDate=${endDate}`)
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(`HTTP error! Status: ${response.status}`);
+				}
+				return response.json();
+			})
+			.then(data => {
+				console.log("Fetched Data:", data);
+				if (!Array.isArray(data) || data.length === 0) {
+					alert("No valid data found.");
+					return;
+				}
+				var categories = data.map(item => item.category ? item.category.categoryName : "Unknown");
+				var amounts = data.map(item => item.totalAmount || 0);
+				var ctx = document.getElementById("expenseChart").getContext("2d");
+				if (window.myChart) {
+					window.myChart.destroy();
+				}
+				window.myChart = new Chart(ctx, {
+					type: "bar",
+					data: {
+						labels: categories,
+						datasets: [{
+							label: "Expenses",
+							data: amounts,
+							backgroundColor: "rgba(54, 162, 235, 0.6)",
+							borderColor: "rgba(54, 162, 235, 1)",
+							borderWidth: 1
+						}]
+					},
+					options: {
+						responsive: true,
+						scales: {
+							y: { beginAtZero: true }
+						}
+					}
+				});
+			})
+			.catch(error => console.error("Error fetching data:", error));
+		}
+		document.addEventListener("DOMContentLoaded", function () {
+			loadChart();
+		});
+	</script>
+</body>

@@ -1,0 +1,112 @@
+﻿@model IEnumerable<WebApp.Models.Expense>
+
+<div class="container mt-5">
+    <div class="row">
+        <!-- Summary Section -->    
+        <div class="col-md-4">
+            <div class="card shadow-lg text-center">
+                <div class="card-body">
+                    <h4 class="text-primary"><i class="fas fa-wallet"></i> Total Expenses</h4>
+                    <h2 class="text-success">₹ @Model.Sum(x => x.Amount)</h2>
+                </div>
+            </div>
+        </div>
+        <!-- Search & Add Expense Button -->
+        <div class="col-md-8">
+            <div class="d-flex justify-content-between align-items-center">
+                <input type="text" class="form-control w-75" id="searchBox" placeholder="Search expenses...">
+                <a href="@Url.Action("Create", "Expense")" class="btn btn-primary">
+                    <i class="fas fa-plus-circle"></i> Add Expense
+                </a>
+            </div>
+
+            <select id="filterType" style="margin-top:10px;" class="form-control" onchange="filterExpenses()">
+                <option value="week">Last 7 Days</option>
+                <option value="month">This Month</option>
+            </select>
+
+            <h3>Expense: <span id="totalAmount">0.00</span></h3>
+
+        </div>
+    </div>
+    <!-- Expenses Table -->
+    <div class="card shadow-lg mt-4">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0"><i class="fas fa-list"></i> Expense List</h4>
+        </div>
+        <div class="card-body">
+            <table class="table table-hover table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>#</th>
+                        <th>Amount (₹)</th>
+                        <th>Category</th>
+                        <th>Date</th>
+                        <th>Description</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="expenseTable">
+                    @if (!Model.Any())
+                    {
+                        <tr>
+                            <td colspan="7" class="text-center text-muted">No expenses found</td>
+                        </tr>
+                    }
+                    else
+                    {
+                        int index = 1;
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@index</td>
+                                <td>₹ @item.Amount</td>
+                                <td>@item.CategoryId</td>
+                                <td>@item.Date.ToString("yyyy-MM-dd")</td>
+                                <td>@item.Description</td>
+                                <td>
+                                    <a href="@Url.Action("Edit", "Expense", new { id = item.ExpenseId })" class="btn btn-warning btn-sm">
+                                        <i class="fas fa-edit"></i> Edit
+                                    </a>
+                                    <a href="@Url.Action("Delete", "Expense", new { id = item.ExpenseId })" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this expense?');">
+                                        <i class="fas fa-trash-alt"></i> Delete
+                                    </a>
+                                </td>
+                            </tr>
+                            index++;
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Include FontAwesome for Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+<!-- Search Filter Script -->
+<script>
+    document.getElementById("searchBox").addEventListener("keyup", function () {
+        let filter = this.value.toLowerCase();
+        let rows = document.querySelectorAll("#expenseTable tr");
+        rows.forEach(row => {
+            let text = row.innerText.toLowerCase();
+            row.style.display = text.includes(filter) ? "" : "none";
+        });
+    });
+
+
+        //Filter for day,month code
+        function filterExpenses() {
+        var type = $('#filterType').val();
+        $.ajax({
+            url: '/Expense/FilterExpenses',
+            type: 'GET',
+            data: { filterType: type },
+            success: function (data) {
+                $('#totalAmount').text(data.total.toFixed(2));
+            }
+        });
+    }
+</script>
