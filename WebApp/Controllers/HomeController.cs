@@ -18,8 +18,8 @@ namespace WebApp.Controllers
         {
             return View();
         }
-        //[Authorize(Policy ="Admin")]
-        //[Authorize(policy: "User")]
+
+
 
 
     }
