@@ -7,7 +7,7 @@ using WebApp.Models;
 
 namespace WebApp.Controllers
 {
-    [Authorize(policy: "User")]
+    [Authorize]
     public class CategoryController : Controller
     {
         private readonly ApplicationDbContext _context;

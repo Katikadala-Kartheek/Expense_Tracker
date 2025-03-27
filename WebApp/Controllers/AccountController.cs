@@ -31,7 +31,7 @@ namespace WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                string AssignedRole=model.Email.ToLower()=="admin@gmail.com" ? "Admin" : "User";
+                string AssignedRole=model.Email.ToLower()=="admin1@gmail.com" ? "Admin" : "User";
 
                 var user = new IdentityUser
                 {

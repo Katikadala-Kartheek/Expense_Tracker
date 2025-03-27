@@ -17,7 +17,7 @@ namespace WebApp.Models
         public string? Description { get; set; }
 
         [ForeignKey("CategoryId")]
-        public Category? Category { get; set; }
+        public Category? Category { get; set; } //Navigation Property
 
         public virtual IdentityUser User { get; set; }
     }

@@ -22,4 +22,9 @@
     <PackageReference Include="StackExchange.Redis" Version="2.8.31" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Areas\Admin\Models\" />
+  </ItemGroup>
+
 </Project>

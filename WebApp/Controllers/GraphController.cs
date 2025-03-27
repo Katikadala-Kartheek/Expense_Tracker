@@ -5,7 +5,7 @@ using WebApp.Data;
 
 namespace WebApp.Controllers
 {
-    [Authorize(policy: "User")]
+    [Authorize]
     public class GraphController : Controller
     {
 

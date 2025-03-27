@@ -12,7 +12,6 @@ using WebApp.Models;
 namespace WebApp.Controllers
 {
     [Authorize]
-    [Authorize(policy: "User")]
     public class ExpenseController : Controller
     {
 
