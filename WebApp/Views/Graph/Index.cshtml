@@ -23,9 +23,16 @@
 			background-color: #0056b3;
 		}
 
+	.canvas-container {
+		height: 90vh;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
 	canvas {
-		max-width: 90%;
-		height: 60%;
+		width: 90%;
+		height: 90%;
 	}
 </style>
 
@@ -47,6 +54,12 @@
 			</div>
 		</div>
 		<canvas id="expenseChart"></canvas>
+
+		<div class="canvas-container">
+			@* <canvas id="responsiveCanvas"></canvas> *@
+			<canvas id="expenseChart"></canvas>
+		</div>
+
 	</div>
 	<script>
 		function loadChart() {

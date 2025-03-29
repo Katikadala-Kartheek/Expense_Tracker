@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using WebApp.Data;
+using WebApp.Models;
 
 namespace WebApp.Areas.Admin.Controllers
 {
@@ -8,9 +11,17 @@ namespace WebApp.Areas.Admin.Controllers
     [Area("Admin")]
     public class AdminHomeController : Controller
     {
+        private readonly UserManager<IdentityUser> _userManager;
+
+        public AdminHomeController(UserManager<IdentityUser> userManager)
+        {
+            _userManager = userManager;
+        }
+
         public IActionResult Index()
         {
-            return View();
+            var users = _userManager.Users.ToList();
+            return View(users);
         }
     }
 }

@@ -1,1 +1,23 @@
-﻿<p>Admin Page</p>
+﻿<h1 style="text-align:center">Admin Dashboard</h1>
+@model IEnumerable<Microsoft.AspNetCore.Identity.IdentityUser>
+
+<table class="table caption-top">
+	<caption>List of users</caption>
+	<thead>
+		<tr>
+			<th scope="col">#</th>
+			<th scope="col">User Id</th>
+			<th scope="col">User Name</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var user in Model)
+		{
+			<tr>
+				<th scope="row">1</th>
+				<td>@user.Id</td>
+				<td>@user.UserName</td>
+			</tr>
+		}
+	</tbody>
+</table>
