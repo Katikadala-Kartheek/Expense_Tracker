@@ -50,3 +50,42 @@ builder.Services.AddAuthorization();
 [Authorize]
 [Authorize(policy: "Admin")]
 [Area("Admin")]
+
+
+
+<div class="collapse navbar-collapse" id="navbarNav">
+	<ul class="navbar-nav ms-auto">
+		@{
+			@using Microsoft.AspNetCore.Identity
+			@inject UserManager<IdentityUser> UserManager
+
+			var user = await UserManager.GetUserAsync(User);
+		}
+
+		@if (User.IsInRole("Admin"))
+		{
+			<li class="nav-item"><a class="nav-link" asp-area="Admin" asp-controller="AdminHome" asp-action="Index">Admin</a></li>
+		}
+		<li class="nav-item"><a class="nav-link" href="@Url.Action("Index", "Expense")">Dashboard</a></li>
+		<li class="nav-item"><a class="nav-link" href="@Url.Action("Create", "Expense")">Add Expense</a></li>
+		<li class="nav-item"><a class="nav-link" href="@Url.Action("Index", "Graph")">Reports</a></li>
+
+
+		@if (user != null)
+		{
+			<div class="right">
+				<a class="btn btn-outline-danger" href="@Url.Action("Logout", "Account")">Logout</a>
+			</div>
+		}
+		else
+		{
+			<div class="right">
+				<a class="btn btn-outline-light" href="@Url.Action("Login", "Account")">Login</a>
+				<a class="btn btn-outline-primary" href="@Url.Action("Register", "Account")">SignUp</a>
+			</div>
+		}
+</div>
+	</ul>
+</div>
+
+
